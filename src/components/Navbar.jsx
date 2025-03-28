@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import Image from "./Image";
+import { Link } from "react-router-dom";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between">
       {/* LOGO */}
-      <div className="flex items-center gap-4 text-2xl font-bold">
-        <img src="/logo.png" className="w-8 h-8" alt="" />
+      <Link to="/" className="flex items-center gap-4 text-2xl font-bold">
+        <Image src="logo.png" alt="Lama Logo" w={32} h={32} />
         <span>lamalog</span>
-      </div>
+      </Link>
       {/* MOBILE MENU */}
       <div className="md:hidden">
         <div
@@ -20,33 +23,37 @@ const Navbar = () => {
       </div>
       {/* MOBILE LINK LIST */}
       <div
-        className={`w-full h-screen bg-[#e6e6ff] flex flex-col items-center justify-center gap-8 font-medium text-lg absolute top-16 transition-all ease-in-out ${
-          open ? "-right-0" : "-right-[100%]"
-        }`}
+        className={`w-full h-screen bg-[#e6e6ff] flex flex-col items-center justify-center gap-8 font-medium text-lg absolute top-16 transition-all ease-in-out ${open ? "-right-0" : "-right-[100%]"
+          }`}
       >
-        <a href="">მთავარი</a>
-        <a href="">ტრენდული</a>
-        <a href="">პოპულარული</a>
-        <a href="">ჩვენ შესახებ</a>
-        <a href="">
+        <Link to="/" onClick={() => setOpen(false)}>მთავარი</Link>
+        <Link to="/posts?sort=trending" onClick={() => setOpen(false)}>ტრენდული</Link>
+        <Link to="/posts?sort=popular" onClick={() => setOpen(false)}>პოპულარული</Link>
+        <Link to="/" onClick={() => setOpen(false)}>ჩვენ სესახებ</Link>
+        <Link to="/login" onClick={() => setOpen(false)}>
           <button className="py-2 px-4 rounded-3xl bg-blue-800 text-white">
             შესვლა 👋
           </button>
-        </a>
+        </Link>
       </div>
       {/* DESKTOP MENU */}
       <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
-        <a href="">მთავარი</a>
-        <a href="">ტრენდული</a>
-        <a href="">პოპულარული</a>
-        <a href="">ჩვენ შესახებ</a>
-        <a href="">
-          <button className="py-2 px-4 rounded-3xl bg-blue-800 text-white">
-            შესვლა 👋
-          </button>
-        </a>
+        <Link to="/" onClick={() => setOpen(false)}>მთავარი</Link>
+        <Link to="/posts?sort=trending" onClick={() => setOpen(false)}>ტრენდული</Link>
+        <Link to="/posts?sort=popular" onClick={() => setOpen(false)}>პოპულარული</Link>
+        <Link to="/" onClick={() => setOpen(false)}>ჩვენ სესახებ</Link>
+        <SignedOut>
+          <Link to="/login" onClick={() => setOpen(false)}>
+            <button className="py-2 px-4 rounded-3xl bg-blue-800 text-white">
+              შესვლა 👋
+            </button>
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
-    </div>
+    </div >
   );
 };
 
